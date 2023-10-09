@@ -1,0 +1,76 @@
+#!/bin/sh
+
+convert() {
+    local rb_file="$1"
+    local hex_string_in="$2"
+    local hex_string_out="$3"
+
+    # Input processing
+    local input_cmd
+    if [ "$hex_string_in" = true ]; then
+        if [ ! -t 0 ]; then
+            input_cmd="xxd -r -p"
+        elif [ "$#" -gt 3 ]; then
+            input_cmd="echo '${@:4}' | xxd -r -p"
+        else
+            input_cmd="xclip -o | xxd -r -p"
+        fi
+    else
+        if [ ! -t 0 ]; then
+            input_cmd="cat"
+        elif [ "$#" -gt 3 ]; then
+            input_cmd="echo '${@:4}'"
+        else
+            input_cmd="xclip -o"
+        fi
+    fi
+
+    # Output processing
+    if [ "$hex_string_out" = true ]; then
+        eval "$input_cmd" | "$rb_file" | xxd -p
+    else
+        eval "$input_cmd" | "$rb_file"
+    fi
+}
+
+cbor()                { convert ~/.gem/bin/cbor2diag.rb        true   false "$@"; }
+2cborbin()            { convert ~/.gem/bin/diag2cbor.rb        false  false "$@"; }
+2cbor()               { convert ~/.gem/bin/diag2cbor.rb        false  true  "$@"; }
+
+cbor2diag()           { convert ~/.gem/bin/cbor2diag.rb        true   false "$@"; }
+cbor2json()           { convert ~/.gem/bin/cbor2json.rb        true   false "$@"; }
+cbor2pretty()         { convert ~/.gem/bin/cbor2pretty.rb      true   false "$@"; }
+cbor2u8()             { convert ~/.gem/bin/cbor2u8.rb          true   false "$@"; }
+cbor2yaml()           { convert ~/.gem/bin/cbor2yaml.rb        true   false "$@"; }
+cborbin2diag()        { convert ~/.gem/bin/cbor2diag.rb        false  false "$@"; }
+cborbin2json()        { convert ~/.gem/bin/cbor2json.rb        false  false "$@"; }
+cborbin2pretty()      { convert ~/.gem/bin/cbor2pretty.rb      false  false "$@"; }
+cborbin2u8()          { convert ~/.gem/bin/cbor2u8.rb          false  false "$@"; }
+cborbin2yaml()        { convert ~/.gem/bin/cbor2yaml.rb        false  false "$@"; }
+cborbin()             { convert ~/.gem/bin/cbor2diag.rb        false  false "$@"; }
+cborseq2diag()        { convert ~/.gem/bin/cborseq2diag.rb     true   false "$@"; }
+cborseq2json()        { convert ~/.gem/bin/cborseq2json.rb     true   false "$@"; }
+cborseq2neatjson()    { convert ~/.gem/bin/cborseq2neatjson.rb true   false "$@"; }
+cborseq2pretty()      { convert ~/.gem/bin/cborseq2pretty.rb   true   false "$@"; }
+cborseq2yaml()        { convert ~/.gem/bin/cborseq2yaml.rb     true   false "$@"; }
+cborseqbin2diag()     { convert ~/.gem/bin/cborseq2diag.rb     false  false "$@"; }
+cborseqbin2json()     { convert ~/.gem/bin/cborseq2json.rb     false  false "$@"; }
+cborseqbin2neatjson() { convert ~/.gem/bin/cborseq2neatjson.rb false  false "$@"; }
+cborseqbin2pretty()   { convert ~/.gem/bin/cborseq2pretty.rb   false  false "$@"; }
+cborseqbin2yaml()     { convert ~/.gem/bin/cborseq2yaml.rb     false  false "$@"; }
+diag2cborbin()        { convert ~/.gem/bin/diag2cbor.rb        false  false "$@"; }
+diag2cbor()           { convert ~/.gem/bin/diag2cbor.rb        false  true  "$@"; }
+diag2diag()           { convert ~/.gem/bin/diag2diag.rb        false  false "$@"; }
+diag2pretty()         { convert ~/.gem/bin/diag2pretty.rb      false  false "$@"; }
+json2cborbin()        { convert ~/.gem/bin/json2cbor.rb        false  false "$@"; }
+json2cbor()           { convert ~/.gem/bin/json2cbor.rb        false  true  "$@"; }
+json2json()           { convert ~/.gem/bin/json2json.rb        false  false "$@"; }
+json2neatjson()       { convert ~/.gem/bin/json2neatjson.rb    false  false "$@"; }
+json2pretty()         { convert ~/.gem/bin/json2pretty.rb      false  false "$@"; }
+json2yaml()           { convert ~/.gem/bin/json2yaml.rb        false  false "$@"; }
+pretty2cborbin()      { convert ~/.gem/bin/pretty2cbor.rb      false  false "$@"; }
+pretty2cbor()         { convert ~/.gem/bin/pretty2cbor.rb      false  true  "$@"; }
+pretty2diag()         { convert ~/.gem/bin/pretty2diag.rb      false  false "$@"; }
+yaml2cborbin()        { convert ~/.gem/bin/yaml2cbor.rb        false  false "$@"; }
+yaml2cbor()           { convert ~/.gem/bin/yaml2cbor.rb        false  true  "$@"; }
+yaml2json()           { convert ~/.gem/bin/yaml2json.rb        false  false "$@"; }
