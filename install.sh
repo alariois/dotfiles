@@ -5,11 +5,30 @@ SCRIPT_DIR="$(dirname $(realpath $0))"
 create_link() {
     local file_path="$1"
     local file_name="$2"
+    local target="$HOME/$file_name"
 
-    echo ln -s "$file_path" "$HOME/$file_name"
-    ln -s "$file_path" "$HOME/$file_name"
+    if [ -e "$target" ]; then
+        if [ -L "$target" ]; then
+            echo "Target '$target' already exists as a link. Skipping."
+            return
+        else
+            echo -n "Target '$target' exists and is not a link. Delete and create the link? (y/n) "
+            read response < /dev/tty
+            case $response in
+                y|Y|yes|YES)
+                    rm -rf "$target"
+                    ;;
+                *)
+                    return
+                    ;;
+            esac
+        fi
+    fi
+
+    echo "Creating a link from '$file_path' to '$target'"
+    echo "  " ln -s "$file_path" "$target"
+    ln -s "$file_path" "$target"
 }
-
 find "$SCRIPT_DIR" \
     -mindepth 1 \
     -maxdepth 1 \
