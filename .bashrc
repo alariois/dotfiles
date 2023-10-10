@@ -128,7 +128,7 @@ export EDITOR='nvim -u NONE'
 export VISUAL='nvim -u NONE'
 
 # deep node
-alias dn='node ~/deep_node_log.js'
+alias dn='node ~/scripts/deep_node_log.js'
 
 # set Tallinn as default time zone
 export TZ=Europe/Tallinn
