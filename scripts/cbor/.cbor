@@ -1,5 +1,8 @@
 #!/bin/sh
 
+GEM_PATH=$(gem env gemdir)
+CBOR_DIAG_PATH=$(ls -d $GEM_PATH/gems/cbor-diag-*/bin)
+
 convert() {
     local rb_file="$1"
     local hex_string_in="$2"
