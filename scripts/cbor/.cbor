@@ -16,7 +16,7 @@ convert() {
         elif [ "$#" -gt 3 ]; then
             input_cmd="echo '${@:4}' | xxd -r -p"
         else
-            input_cmd="xclip -o | xxd -r -p"
+            input_cmd="xclip -o -se c | xxd -r -p"
         fi
     else
         if [ ! -t 0 ]; then
@@ -24,7 +24,7 @@ convert() {
         elif [ "$#" -gt 3 ]; then
             input_cmd="echo '${@:4}'"
         else
-            input_cmd="xclip -o"
+            input_cmd="xclip -o -se c"
         fi
     fi
 
