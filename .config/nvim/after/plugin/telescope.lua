@@ -8,7 +8,7 @@ end)
 -- Case-insensitive grep
 vim.keymap.set('n', '<leader>ps', function()
 	builtin.grep_string({
-		search = vim.fn.input("iGrep > "),
+		search = vim.fn.input("Smart Grep > "),
 		ignorecase = true,  -- This makes the search case-insensitive
         smartcase = true    -- Enables smart case searching
 	});
