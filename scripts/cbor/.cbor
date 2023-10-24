@@ -7,22 +7,23 @@ convert() {
     local rb_file="$1"
     local hex_string_in="$2"
     local hex_string_out="$3"
+    local copy_output_to_clipboard="$4"
 
     # Input processing
     local input_cmd
     if [ "$hex_string_in" = true ]; then
         if [ ! -t 0 ]; then
             input_cmd="xxd -r -p"
-        elif [ "$#" -gt 3 ]; then
-            input_cmd="echo '${@:4}' | xxd -r -p"
+        elif [ "$#" -gt 4 ]; then
+            input_cmd="echo '${@:5}' | xxd -r -p"
         else
             input_cmd="xclip -o -se c | xxd -r -p"
         fi
     else
         if [ ! -t 0 ]; then
             input_cmd="cat"
-        elif [ "$#" -gt 3 ]; then
-            input_cmd="echo '${@:4}'"
+        elif [ "$#" -gt 4 ]; then
+            input_cmd="echo '${@:5}'"
         else
             input_cmd="xclip -o -se c"
         fi
@@ -30,50 +31,61 @@ convert() {
 
     # Output processing
     if [ "$hex_string_out" = true ]; then
-        eval "$input_cmd" | "$rb_file" | xxd -p
+        if [ "$copy_output_to_clipboard" = true ]; then
+            eval "$input_cmd" | "$rb_file" | xxd -p | xclip -se c
+        else
+            eval "$input_cmd" | "$rb_file" | xxd -p
+        fi
     else
-        eval "$input_cmd" | "$rb_file"
-    fi
+        if [ "$copy_output_to_clipboard" = true ]; then
+            eval "$input_cmd" | "$rb_file" | xclip -se c
+        else
+            eval "$input_cmd" | "$rb_file"
+        fi
+fi
 }
 
-cbor()                { convert $CBOR_DIAG_PATH/cbor2diag.rb        true   false "$@"; }
-2cborbin()            { convert $CBOR_DIAG_PATH/diag2cbor.rb        false  false "$@"; }
-2cbor()               { convert $CBOR_DIAG_PATH/diag2cbor.rb        false  true  "$@"; }
+cbor()                { convert $CBOR_DIAG_PATH/cbor2diag.rb        true   false false "$@"; }
+2cborbin()            { convert $CBOR_DIAG_PATH/diag2cbor.rb        false  false false "$@"; }
+2cbor()               { convert $CBOR_DIAG_PATH/diag2cbor.rb        false  true  false "$@"; }
 
-cbor2diag()           { convert $CBOR_DIAG_PATH/cbor2diag.rb        true   false "$@"; }
-cbor2json()           { convert $CBOR_DIAG_PATH/cbor2json.rb        true   false "$@"; }
-cbor2pretty()         { convert $CBOR_DIAG_PATH/cbor2pretty.rb      true   false "$@"; }
-cbor2u8()             { convert $CBOR_DIAG_PATH/cbor2u8.rb          true   false "$@"; }
-cbor2yaml()           { convert $CBOR_DIAG_PATH/cbor2yaml.rb        true   false "$@"; }
-cborbin2diag()        { convert $CBOR_DIAG_PATH/cbor2diag.rb        false  false "$@"; }
-cborbin2json()        { convert $CBOR_DIAG_PATH/cbor2json.rb        false  false "$@"; }
-cborbin2pretty()      { convert $CBOR_DIAG_PATH/cbor2pretty.rb      false  false "$@"; }
-cborbin2u8()          { convert $CBOR_DIAG_PATH/cbor2u8.rb          false  false "$@"; }
-cborbin2yaml()        { convert $CBOR_DIAG_PATH/cbor2yaml.rb        false  false "$@"; }
-cborbin()             { convert $CBOR_DIAG_PATH/cbor2diag.rb        false  false "$@"; }
-cborseq2diag()        { convert $CBOR_DIAG_PATH/cborseq2diag.rb     true   false "$@"; }
-cborseq2json()        { convert $CBOR_DIAG_PATH/cborseq2json.rb     true   false "$@"; }
-cborseq2neatjson()    { convert $CBOR_DIAG_PATH/cborseq2neatjson.rb true   false "$@"; }
-cborseq2pretty()      { convert $CBOR_DIAG_PATH/cborseq2pretty.rb   true   false "$@"; }
-cborseq2yaml()        { convert $CBOR_DIAG_PATH/cborseq2yaml.rb     true   false "$@"; }
-cborseqbin2diag()     { convert $CBOR_DIAG_PATH/cborseq2diag.rb     false  false "$@"; }
-cborseqbin2json()     { convert $CBOR_DIAG_PATH/cborseq2json.rb     false  false "$@"; }
-cborseqbin2neatjson() { convert $CBOR_DIAG_PATH/cborseq2neatjson.rb false  false "$@"; }
-cborseqbin2pretty()   { convert $CBOR_DIAG_PATH/cborseq2pretty.rb   false  false "$@"; }
-cborseqbin2yaml()     { convert $CBOR_DIAG_PATH/cborseq2yaml.rb     false  false "$@"; }
-diag2cborbin()        { convert $CBOR_DIAG_PATH/diag2cbor.rb        false  false "$@"; }
-diag2cbor()           { convert $CBOR_DIAG_PATH/diag2cbor.rb        false  true  "$@"; }
-diag2diag()           { convert $CBOR_DIAG_PATH/diag2diag.rb        false  false "$@"; }
-diag2pretty()         { convert $CBOR_DIAG_PATH/diag2pretty.rb      false  false "$@"; }
-json2cborbin()        { convert $CBOR_DIAG_PATH/json2cbor.rb        false  false "$@"; }
-json2cbor()           { convert $CBOR_DIAG_PATH/json2cbor.rb        false  true  "$@"; }
-json2json()           { convert $CBOR_DIAG_PATH/json2json.rb        false  false "$@"; }
-json2neatjson()       { convert $CBOR_DIAG_PATH/json2neatjson.rb    false  false "$@"; }
-json2pretty()         { convert $CBOR_DIAG_PATH/json2pretty.rb      false  false "$@"; }
-json2yaml()           { convert $CBOR_DIAG_PATH/json2yaml.rb        false  false "$@"; }
-pretty2cborbin()      { convert $CBOR_DIAG_PATH/pretty2cbor.rb      false  false "$@"; }
-pretty2cbor()         { convert $CBOR_DIAG_PATH/pretty2cbor.rb      false  true  "$@"; }
-pretty2diag()         { convert $CBOR_DIAG_PATH/pretty2diag.rb      false  false "$@"; }
-yaml2cborbin()        { convert $CBOR_DIAG_PATH/yaml2cbor.rb        false  false "$@"; }
-yaml2cbor()           { convert $CBOR_DIAG_PATH/yaml2cbor.rb        false  true  "$@"; }
-yaml2json()           { convert $CBOR_DIAG_PATH/yaml2json.rb        false  false "$@"; }
+# format the json and save the result to the clipboard
+jsonfmt()             { convert $CBOR_DIAG_PATH/json2json.rb        false  false true  "$@"; }
+
+cbor2diag()           { convert $CBOR_DIAG_PATH/cbor2diag.rb        true   false false "$@"; }
+cbor2json()           { convert $CBOR_DIAG_PATH/cbor2json.rb        true   false false "$@"; }
+cbor2pretty()         { convert $CBOR_DIAG_PATH/cbor2pretty.rb      true   false false "$@"; }
+cbor2u8()             { convert $CBOR_DIAG_PATH/cbor2u8.rb          true   false false "$@"; }
+cbor2yaml()           { convert $CBOR_DIAG_PATH/cbor2yaml.rb        true   false false "$@"; }
+cborbin2diag()        { convert $CBOR_DIAG_PATH/cbor2diag.rb        false  false false "$@"; }
+cborbin2json()        { convert $CBOR_DIAG_PATH/cbor2json.rb        false  false false "$@"; }
+cborbin2pretty()      { convert $CBOR_DIAG_PATH/cbor2pretty.rb      false  false false "$@"; }
+cborbin2u8()          { convert $CBOR_DIAG_PATH/cbor2u8.rb          false  false false "$@"; }
+cborbin2yaml()        { convert $CBOR_DIAG_PATH/cbor2yaml.rb        false  false false "$@"; }
+cborbin()             { convert $CBOR_DIAG_PATH/cbor2diag.rb        false  false false "$@"; }
+cborseq2diag()        { convert $CBOR_DIAG_PATH/cborseq2diag.rb     true   false false "$@"; }
+cborseq2json()        { convert $CBOR_DIAG_PATH/cborseq2json.rb     true   false false "$@"; }
+cborseq2neatjson()    { convert $CBOR_DIAG_PATH/cborseq2neatjson.rb true   false false "$@"; }
+cborseq2pretty()      { convert $CBOR_DIAG_PATH/cborseq2pretty.rb   true   false false "$@"; }
+cborseq2yaml()        { convert $CBOR_DIAG_PATH/cborseq2yaml.rb     true   false false "$@"; }
+cborseqbin2diag()     { convert $CBOR_DIAG_PATH/cborseq2diag.rb     false  false false "$@"; }
+cborseqbin2json()     { convert $CBOR_DIAG_PATH/cborseq2json.rb     false  false false "$@"; }
+cborseqbin2neatjson() { convert $CBOR_DIAG_PATH/cborseq2neatjson.rb false  false false "$@"; }
+cborseqbin2pretty()   { convert $CBOR_DIAG_PATH/cborseq2pretty.rb   false  false false "$@"; }
+cborseqbin2yaml()     { convert $CBOR_DIAG_PATH/cborseq2yaml.rb     false  false false "$@"; }
+diag2cborbin()        { convert $CBOR_DIAG_PATH/diag2cbor.rb        false  false false "$@"; }
+diag2cbor()           { convert $CBOR_DIAG_PATH/diag2cbor.rb        false  true  false "$@"; }
+diag2diag()           { convert $CBOR_DIAG_PATH/diag2diag.rb        false  false false "$@"; }
+diag2pretty()         { convert $CBOR_DIAG_PATH/diag2pretty.rb      false  false false "$@"; }
+json2cborbin()        { convert $CBOR_DIAG_PATH/json2cbor.rb        false  false false "$@"; }
+json2cbor()           { convert $CBOR_DIAG_PATH/json2cbor.rb        false  true  false "$@"; }
+json2json()           { convert $CBOR_DIAG_PATH/json2json.rb        false  false false "$@"; }
+json2neatjson()       { convert $CBOR_DIAG_PATH/json2neatjson.rb    false  false false "$@"; }
+json2pretty()         { convert $CBOR_DIAG_PATH/json2pretty.rb      false  false false "$@"; }
+json2yaml()           { convert $CBOR_DIAG_PATH/json2yaml.rb        false  false false "$@"; }
+pretty2cborbin()      { convert $CBOR_DIAG_PATH/pretty2cbor.rb      false  false false "$@"; }
+pretty2cbor()         { convert $CBOR_DIAG_PATH/pretty2cbor.rb      false  true  false "$@"; }
+pretty2diag()         { convert $CBOR_DIAG_PATH/pretty2diag.rb      false  false false "$@"; }
+yaml2cborbin()        { convert $CBOR_DIAG_PATH/yaml2cbor.rb        false  false false "$@"; }
+yaml2cbor()           { convert $CBOR_DIAG_PATH/yaml2cbor.rb        false  true  false "$@"; }
+yaml2json()           { convert $CBOR_DIAG_PATH/yaml2json.rb        false  false false "$@"; }
