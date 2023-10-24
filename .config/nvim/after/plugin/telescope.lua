@@ -13,3 +13,10 @@ vim.keymap.set('n', '<leader>ps', function()
         smartcase = true    -- Enables smart case searching
 	});
 end)
+
+-- live grep
+vim.keymap.set('n', '<leader>pr', function()
+	local pattern = vim.fn.input("Regex Grep > ")
+	builtin.live_grep()
+	vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(pattern, true, true, true), 'n', true)
+end)
