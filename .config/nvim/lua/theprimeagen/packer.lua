@@ -70,6 +70,7 @@ return require('packer').startup(function(use)
     use {'stevearc/dressing.nvim'},
     use {'dhruvasagar/vim-zoom'},
     use {'lewis6991/gitsigns.nvim'},
-    use {'preservim/nerdtree'}
+    use {'preservim/nerdtree'},
+    use {'liuchengxu/vista.vim'}
 }
 end)

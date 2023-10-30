@@ -7,6 +7,8 @@ local ThePrimeagenGroup = augroup('ThePrimeagen', {})
 local autocmd = vim.api.nvim_create_autocmd
 local yank_group = augroup('HighlightYank', {})
 
+local dartGroup = augroup('DartSettings', {})
+
 function R(name)
     require("plenary.reload").reload_module(name)
 end
@@ -26,6 +28,13 @@ autocmd({"BufWritePre"}, {
     group = ThePrimeagenGroup,
     pattern = "*",
     command = [[%s/\s\+$//e]],
+})
+
+-- Dart specific tab settings
+autocmd('FileType', {
+    group = dartGroup,
+    pattern = 'dart',
+    command = 'setlocal tabstop=2 softtabstop=2 shiftwidth=2'
 })
 
 vim.g.netrw_browse_split = 0
