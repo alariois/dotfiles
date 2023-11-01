@@ -226,3 +226,20 @@ PERL_MB_OPT="--install_base \"/home/alari/perl5\""; export PERL_MB_OPT;
 PERL_MM_OPT="INSTALL_BASE=/home/alari/perl5"; export PERL_MM_OPT;
 
 source ~/scripts/cbor/.cbor
+. "$HOME/.cargo/env"
+
+# save last stdout to LAST_STDOUT
+LAST_STDOUT="$(mktemp -u)"
+exec > >(tee $LAST_STDOUT)
+
+# save last stderr to LAST_STDERR
+LAST_STDERR="$(mktemp -u)"
+exec 2> >(tee $LAST_STDERR >&2)
+
+function clip() {
+    xclip -selection clipboard < "$LAST_STDOUT"
+}
+
+function cliperr() {
+    xclip -selection clipboard < "$LAST_STDERR"
+}
