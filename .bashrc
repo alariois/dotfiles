@@ -130,6 +130,8 @@ export VISUAL='nvim -u NONE'
 # deep node
 alias dn='node ~/scripts/deep_node_log.js'
 
+source ~/scripts/sync_project/sync_project.sh
+
 # set Tallinn as default time zone
 export TZ=Europe/Tallinn
 
@@ -228,18 +230,22 @@ PERL_MM_OPT="INSTALL_BASE=/home/alari/perl5"; export PERL_MM_OPT;
 source ~/scripts/cbor/.cbor
 . "$HOME/.cargo/env"
 
-# save last stdout to LAST_STDOUT
-LAST_STDOUT="$(mktemp -u)"
-exec > >(tee $LAST_STDOUT)
+# THIS MESSES UP NVIM REAL BAD!
+# TODO: make it toggleable?
+# # save last stdout to LAST_STDOUT
+# LAST_STDOUT="$(mktemp -u)"
+# exec > >(tee $LAST_STDOUT)
 
-# save last stderr to LAST_STDERR
-LAST_STDERR="$(mktemp -u)"
-exec 2> >(tee $LAST_STDERR >&2)
+# # save last stderr to LAST_STDERR
+# LAST_STDERR="$(mktemp -u)"
+# exec 2> >(tee $LAST_STDERR >&2)
 
-function clip() {
-    xclip -selection clipboard < "$LAST_STDOUT"
-}
+# function clip() {
+#     xclip -selection clipboard < "$LAST_STDOUT"
+# }
 
-function cliperr() {
-    xclip -selection clipboard < "$LAST_STDERR"
-}
+# function cliperr() {
+#     xclip -selection clipboard < "$LAST_STDERR"
+# }
+
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
