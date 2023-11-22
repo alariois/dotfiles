@@ -1,7 +1,18 @@
 # /home/alari/.config/tmuxinator/boldr-app.yml
 
+# NB!
+# This script expects a remote mac keychain password to be saved in 'pass mac'
+# fx, curl, rsync and nvim must be installed
+
 name: boldr-app
 root: /home/alari/projects/superhands/boldr/code/boldr-app
+
+# Runs in each window and pane before window/pane specific commands. Useful for setting up interpreter versions.
+pre_window: |
+  export MAC_IP="192.168.1.164"
+  export MAC_USER="alariois"
+  export MAC_PROJ="projects/boldr-app"
+  export MAC_PROJ_ABSOLUTE="/Users/$MAC_USER/$MAC_PROJ"
 
 # Optional tmux socket
 # socket_name: foo
@@ -26,9 +37,6 @@ root: /home/alari/projects/superhands/boldr/code/boldr-app
 # Run on project stop
 # on_project_stop: command
 
-# Runs in each window and pane before window/pane specific commands. Useful for setting up interpreter versions.
-# pre_window: rbenv shell 2.0.0-p247
-
 # Pass command line options to tmux. Useful for specifying a different tmux.conf.
 # tmux_options: -f ~/.tmux.mac.conf
 
@@ -50,12 +58,10 @@ windows:
       layout: 3742,342x64,0,0{63x64,0,0[63x32,0,0,7,63x31,0,33,9],128x64,64,0,8,149x64,193,0,6}
       panes:
         - >
+            echo "ip = $MAC_IP";
             history -s 'echo R > /tmp/fifoboldr # reload';
-            clear;
             echo 'ANDROID RELOAD';
         - >
-            MAC_PROJ=projects/boldr-app;
-            MAC_IP=192.168.1.164;
             history -s "sync_project . alariois@$MAC_IP:$MAC_PROJ # resync";
             history -s "sync_project -n . alariois@$MAC_IP:$MAC_PROJ # resync dry";
             history -s "sync_project --exclude='ios/' --exclude='*.lock' --exclude='*.json' . alariois@$MAC_IP:$MAC_PROJ; ssh alariois@$MAC_IP 'echo R > /tmp/fifoboldr' # reload";
@@ -74,16 +80,33 @@ windows:
       layout: main-vertical
       panes:
         - >
-            MAC_IP=192.168.1.164;
             ssh alariois@$MAC_IP 'tail -f /tmp/logboldr' | tee /tmp/logboldrmac
         - >
-            MAC_PROJ=/Users/alariois/projects/boldr-app;
-            MAC_IP=192.168.1.164;
-            ssh -t alariois@$MAC_IP "
-               cd $MAC_PROJ;
-               mkfifo /tmp/fifoboldr 2>/dev/null;
-               echo 'tail -f /tmp/fifoboldr | flutter run | perl -pe '\''$| = 1; s/\\\\\\\\x([0-9a-fA-F]{2})/chr(hex(\$1))/ge'\'' | tee -a /tmp/logboldr # development' >> ~/.zsh_history;
-               clear;
-               security unlock-keychain;
-               exec \$SHELL -l;
-            "
+            PASSWORD=$(pass mac)
+             ssh -o SendEnv=PASSWORD -t alariois@$MAC_IP "
+                cd $MAC_PROJ_ABSOLUTE;
+                mkfifo /tmp/fifoboldr 2>/dev/null;
+                echo 'tail -f /tmp/fifoboldr | flutter run | perl -pe '\''$| = 1; s/\\\\\\\\x([0-9a-fA-F]{2})/chr(hex(\$1))/ge'\'' | tee -a /tmp/logboldr # develop' >> ~/.zsh_history;
+                expect -c '
+                  spawn security unlock-keychain
+                  expect \"password to unlock\"
+                  send \"$PASSWORD\\r\"
+                  expect eof
+                ';
+                clear;
+                exec \$SHELL -l;
+             "
+  - wifi:
+    - >
+      history -s "sudo nmap -sn 192.168.1.1/24 # search";
+      history -s "nmcli c s -a # show active";
+      history -s "nmcli d w c wifissid # connect";
+      history -s "nmcli -c y d w l | grep 'shelly\|' # scan";
+      clear;
+  - curl:
+    - >
+      IP=192.168.33.1;
+      history -s 'curl http://$IP/shelly | fx # shelly';
+      history -s 'curl http://$IP/status | fx # status';
+      history -s 'curl http://$IP/settings?reset=1 | fx # reset';
+      clear;
