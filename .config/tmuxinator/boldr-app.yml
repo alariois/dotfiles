@@ -1,0 +1,89 @@
+# /home/alari/.config/tmuxinator/boldr-app.yml
+
+name: boldr-app
+root: /home/alari/projects/superhands/boldr/code/boldr-app
+
+# Optional tmux socket
+# socket_name: foo
+
+# Note that the pre and post options have been deprecated and will be replaced by
+# project hooks.
+
+# Project hooks
+
+# Runs on project start, always
+# on_project_start: command
+
+# Run on project start, the first time
+# on_project_first_start: command
+
+# Run on project start, after the first time
+# on_project_restart: command
+
+# Run on project exit ( detaching from tmux session )
+# on_project_exit: command
+
+# Run on project stop
+# on_project_stop: command
+
+# Runs in each window and pane before window/pane specific commands. Useful for setting up interpreter versions.
+# pre_window: rbenv shell 2.0.0-p247
+
+# Pass command line options to tmux. Useful for specifying a different tmux.conf.
+# tmux_options: -f ~/.tmux.mac.conf
+
+# Change the command to call tmux.  This can be used by derivatives/wrappers like byobu.
+# tmux_command: byobu
+
+# Specifies (by name or index) which window will be selected on project startup. If not set, the first window is used.
+# startup_window: editor
+
+# Specifies (by index) which pane of the specified window will be selected on project startup. If not set, the first pane is used.
+# startup_pane: 1
+
+# Controls whether the tmux session should be attached to automatically. Defaults to true.
+# attach: false
+
+windows:
+  - code: nvim .
+  - log:
+      layout: 3742,342x64,0,0{63x64,0,0[63x32,0,0,7,63x31,0,33,9],128x64,64,0,8,149x64,193,0,6}
+      panes:
+        - >
+            history -s 'echo R > /tmp/fifoboldr # reload';
+            clear;
+            echo 'ANDROID RELOAD';
+        - >
+            MAC_PROJ=projects/boldr-app;
+            MAC_IP=192.168.1.164;
+            history -s "sync_project . alariois@$MAC_IP:$MAC_PROJ # resync";
+            history -s "sync_project -n . alariois@$MAC_IP:$MAC_PROJ # resync dry";
+            history -s "sync_project --exclude='ios/' --exclude='*.lock' --exclude='*.json' . alariois@$MAC_IP:$MAC_PROJ; ssh alariois@$MAC_IP 'echo R > /tmp/fifoboldr' # reload";
+            history -s "sync_project -n --exclude='ios/' --exclude='*.lock' --exclude='*.json' . alariois@$MAC_IP:$MAC_PROJ; ssh alariois@$MAC_IP 'echo R > /tmp/fifoboldr' # reload dry";
+            clear;
+            echo 'IOS RELOAD';
+        - >
+            history -s "less -S -R +'&MQTT: |Device: |Wifi: |Http: ' /tmp/logboldr # log";
+            clear;
+            echo 'ANDROID LOG';
+        - >
+            history -s "less -S -R +'&MQTT: |Device: |Wifi: |Http: ' /tmp/logboldrmac # log";
+            clear;
+            echo 'IOS LOG';
+  - mac:
+      layout: main-vertical
+      panes:
+        - >
+            MAC_IP=192.168.1.164;
+            ssh alariois@$MAC_IP 'tail -f /tmp/logboldr' | tee /tmp/logboldrmac
+        - >
+            MAC_PROJ=/Users/alariois/projects/boldr-app;
+            MAC_IP=192.168.1.164;
+            ssh -t alariois@$MAC_IP "
+               cd $MAC_PROJ;
+               mkfifo /tmp/fifoboldr 2>/dev/null;
+               echo 'tail -f /tmp/fifoboldr | flutter run | perl -pe '\''$| = 1; s/\\\\\\\\x([0-9a-fA-F]{2})/chr(hex(\$1))/ge'\'' | tee -a /tmp/logboldr # development' >> ~/.zsh_history;
+               clear;
+               security unlock-keychain;
+               exec \$SHELL -l;
+            "
