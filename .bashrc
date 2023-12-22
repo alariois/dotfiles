@@ -130,6 +130,8 @@ export VISUAL='nvim -u NONE'
 # deep node
 alias dn='node ~/scripts/deep_node_log.js'
 
+alias tmuxmobile='tmux source-file ~/.tmux.mobile.conf'
+
 source ~/scripts/sync_project/sync_project.sh
 
 # set Tallinn as default time zone
