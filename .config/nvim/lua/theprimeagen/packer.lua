@@ -71,6 +71,7 @@ return require('packer').startup(function(use)
     use {'dhruvasagar/vim-zoom'},
     use {'lewis6991/gitsigns.nvim'},
     use {'preservim/nerdtree'},
-    use {'liuchengxu/vista.vim'}
+    use {'liuchengxu/vista.vim'},
+    use {'previm/previm'}
 }
 end)

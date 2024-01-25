@@ -129,8 +129,12 @@ export VISUAL='nvim -u NONE'
 
 # deep node
 alias dn='node ~/scripts/deep_node_log.js'
+alias cobsenc="python ~/scripts/cobs_tool.py encode"
+alias cobsdec="python ~/scripts/cobs_tool.py decode"
+
 
 alias tmuxmobile='tmux source-file ~/.tmux.mobile.conf'
+alias get_idf='. $HOME/esp/esp-idf/export.sh'
 
 source ~/scripts/sync_project/sync_project.sh
 
@@ -249,5 +253,15 @@ source ~/scripts/cbor/.cbor
 # function cliperr() {
 #     xclip -selection clipboard < "$LAST_STDERR"
 # }
+
+export JAVA_HOME=/usr/bin/java
+export ANDROID_HOME=/home/alari/Android/Sdk
+export PATH=$PATH:$ANDROID_HOME/emulator
+export PATH=$PATH:$ANDROID_HOME/platform-tools
+export PATH=$PATH:/home/alari/tools/latexdiff
+export PATH=$PATH:/home/alari/tools
+export SPHINXBUILD=/home/alari/bin/sphinx-build
+export ZEPHYR_BASE=/home/alari/zephyrproject
+
 
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
