@@ -1,0 +1,2 @@
+alias cobsenc="python ~/scripts/cobs_tool.py encode"
+alias cobsdec="python ~/scripts/cobs_tool.py decode"
