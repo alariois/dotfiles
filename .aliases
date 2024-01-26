@@ -1,2 +1,14 @@
-alias cobsenc="python ~/scripts/cobs_tool.py encode"
-alias cobsdec="python ~/scripts/cobs_tool.py decode"
+# let's use functions instead of alias's to make them available while calling eval also!
+
+function cobsenc() {
+    python ~/scripts/cobs_tool.py encode "$@"
+}
+
+function cobsdec() {
+    python ~/scripts/cobs_tool.py decode "$@"
+}
+
+source ~/scripts/cbor/.cbor
+
+export -f cobsenc
+export -f cobsdec
