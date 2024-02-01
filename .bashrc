@@ -252,7 +252,7 @@ PERL_MM_OPT="INSTALL_BASE=/home/alari/perl5"; export PERL_MM_OPT;
 #     xclip -selection clipboard < "$LAST_STDERR"
 # }
 
-export JAVA_HOME=/usr/bin/java
+export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
 export ANDROID_HOME=/home/alari/Android/Sdk
 export PATH=$PATH:$ANDROID_HOME/emulator
 export PATH=$PATH:$ANDROID_HOME/platform-tools
