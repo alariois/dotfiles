@@ -10,5 +10,27 @@ function cobsdec() {
 
 source ~/scripts/cbor/.cbor
 
+vimcmd() {
+# usage   : write in files  vimcmd '<command>' -i <files>
+# usage   : stdio vimcmd    | vimcmd '<command>'
+# example : write in files  vimcmd '%S/change/tothat/g' -i files*
+# example : stdio vimcmd    | vimcmd '%S/change/tothat/g'
+
+    if [[ "$2" == "-i" ]]; then
+        local cmd="$1"
+        shift 2  # Remove the first two arguments (-i and the command)
+        for file in "$@"; do  # Loop through all the remaining arguments (filenames)
+            # echo "Processing $file with command $cmd"
+            nvim -Es -c "$cmd" -c 'wq' "$file"
+        done
+    else
+        local cmd="$1"
+        nvim -Es -S ~/scripts/run_command.vim "$cmd" -
+    fi
+}
+
 export -f cobsenc
 export -f cobsdec
+export -f vimcmd
+
+
