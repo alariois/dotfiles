@@ -1,4 +1,8 @@
 #!/bin/sh
+#
+# install:
+# sudo apt install ruby-full
+# sudo gem install cbor-diag
 
 export GEM_PATH=$(gem env gemdir)
 export CBOR_DIAG_PATH=$(ls -d $GEM_PATH/gems/cbor-diag-*/bin)
