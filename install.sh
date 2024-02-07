@@ -1,5 +1,7 @@
 #/bin/sh
 
+# TODO: automatically install necessary packages (cbor, mosquitto, etc)
+
 SCRIPT_DIR="$(dirname $(realpath $0))"
 
 create_link() {
