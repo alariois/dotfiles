@@ -29,6 +29,8 @@ vimcmd() {
     fi
 }
 
+alias gitsum="git fetch origin; git log --date=relative --all --pretty=\$'%cd\t%an\t%d\t%s' | grep 'origin/' | column -t -s \$'\t'"
+
 export -f cobsenc
 export -f cobsdec
 export -f vimcmd

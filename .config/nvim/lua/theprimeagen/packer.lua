@@ -72,6 +72,7 @@ return require('packer').startup(function(use)
     use {'lewis6991/gitsigns.nvim'},
     use {'preservim/nerdtree'},
     use {'liuchengxu/vista.vim'},
-    use {'previm/previm'}
+    use {'previm/previm'},
+    use {'valir/vim-kconfig'}
 }
 end)
