@@ -9,6 +9,11 @@ if [ -f ~/.aliases ]; then
     source ~/.aliases
 fi
 
+if [ -f ~/scripts/histogram.sh ]; then
+    # echo "Sourcing ~/.aliases" >> ~/vim-shell-debug.log
+    source ~/scripts/histogram.sh
+fi
+
 # Execute the command
 if [ "$1" = "-c" ]; then
     shift  # Remove the first argument ("-c")
