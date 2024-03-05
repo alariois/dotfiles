@@ -136,6 +136,8 @@ alias get_idf='. $HOME/esp/esp-idf/export.sh'
 
 source ~/scripts/sync_project/sync_project.sh
 source ~/scripts/histogram.sh
+source ~/scripts/remrep.sh
+source ~/scripts/jsonstr/jsonstr.sh
 source ~/.aliases
 
 # set Tallinn as default time zone
