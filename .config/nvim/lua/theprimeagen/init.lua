@@ -37,6 +37,30 @@ autocmd('FileType', {
     command = 'setlocal tabstop=2 softtabstop=2 shiftwidth=2'
 })
 
+autocmd('FileType', {
+    group = dartGroup,
+    pattern = 'typescript',
+    command = 'setlocal tabstop=2 softtabstop=2 shiftwidth=2'
+})
+
+autocmd('FileType', {
+    group = dartGroup,
+    pattern = 'javascript',
+    command = 'setlocal tabstop=2 softtabstop=2 shiftwidth=2'
+})
+
+autocmd('FileType', {
+    group = dartGroup,
+    pattern = 'typescriptreact',
+    command = 'setlocal tabstop=2 softtabstop=2 shiftwidth=2'
+})
+
+autocmd('FileType', {
+    group = dartGroup,
+    pattern = 'javascriptreact',
+    command = 'setlocal tabstop=2 softtabstop=2 shiftwidth=2'
+})
+
 vim.g.netrw_browse_split = 0
 vim.g.netrw_banner = 0
 vim.g.netrw_winsize = 25

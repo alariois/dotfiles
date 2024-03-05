@@ -73,6 +73,8 @@ return require('packer').startup(function(use)
     use {'preservim/nerdtree'},
     use {'liuchengxu/vista.vim'},
     use {'previm/previm'},
-    use {'valir/vim-kconfig'}
+    use {'valir/vim-kconfig'},
+    use('jose-elias-alvarez/null-ls.nvim'),
+    use('MunifTanjim/prettier.nvim')
 }
 end)

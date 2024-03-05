@@ -60,6 +60,8 @@ lsp.on_attach(function(client, bufnr)
   vim.keymap.set("n", "<leader>vtr", function() require'telescope.builtin'.lsp_references() end, opts)
   vim.keymap.set("n", "<leader>vrn", function() vim.lsp.buf.rename() end, opts)
   vim.keymap.set("i", "<C-l>", function() vim.lsp.buf.signature_help() end, opts)
+  vim.keymap.set("n", "<leader>vt", function() vim.lsp.buf.type_definition() end, opts)
+  vim.keymap.set("n", "<leader>vi", function() vim.lsp.buf.implementation() end, opts)
 
     --- Guard against servers without the signatureHelper capability
   if client.server_capabilities.signatureHelpProvider then
