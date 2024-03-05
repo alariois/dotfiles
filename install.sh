@@ -35,6 +35,7 @@ find "$SCRIPT_DIR" \
     -mindepth 1 \
     -maxdepth 1 \
     -not -name "*install.sh" \
+    -not -name "*.gitignore" \
     -not -path "*/.git" \
     -not -path "*/.config" \
     -print0 \
