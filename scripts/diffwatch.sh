@@ -2,6 +2,8 @@
 # Usage: diffwatch [watch options] 'command'
 # Example: diffwatch -n 1 'lsusb | sort -u'
 # This example uses 'watch' with a 1-second interval to monitor changes in the sorted USB device list.
+# More complex example:
+# diffwatch -n .1 -- 'udevadm info /dev/ttyACM* | grep '\''ID_MODEL'\'''
 
 diffwatch() {
     # Create a temporary file
