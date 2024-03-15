@@ -134,9 +134,12 @@ alias dn='node ~/scripts/deep_node_log.js'
 alias tmuxmobile='tmux source-file ~/.tmux.mobile.conf'
 alias get_idf='. $HOME/esp/esp-idf/export.sh'
 
+alias nv="NVIM_APPNAME='nvim-next' nvim"
+
 source ~/scripts/sync_project/sync_project.sh
 source ~/scripts/histogram.sh
 source ~/scripts/remrep.sh
+source ~/scripts/diffwatch.sh
 source ~/scripts/jsonstr/jsonstr.sh
 source ~/.aliases
 
@@ -262,7 +265,8 @@ export PATH=$PATH:$ANDROID_HOME/platform-tools
 export PATH=$PATH:/home/alari/tools/latexdiff
 export PATH=$PATH:/home/alari/tools
 export SPHINXBUILD=/home/alari/bin/sphinx-build
-export ZEPHYR_BASE=/home/alari/zephyrproject
+# export ZEPHYR_BASE=/home/alari/zephyrproject
+export ZEPHYR_BASE=/home/alari/ncs_v2.5.2
 
 
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
