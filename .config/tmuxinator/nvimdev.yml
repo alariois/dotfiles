@@ -1,0 +1,11 @@
+# /home/alari/.config/tmuxinator/boldr-app.yml
+
+name: nvimdev
+root: /home/alari/playground
+
+windows:
+  - code:
+      layout: main-vertical
+      panes:
+        - sudo docker container run -ti nvim bash -l
+        - sudo docker container run -ti nvim-kickstart bash -lc "cd ~/.config/nvim && nvim init.lua"
