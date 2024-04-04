@@ -135,6 +135,8 @@ alias tmuxmobile='tmux source-file ~/.tmux.mobile.conf'
 alias get_idf='. $HOME/esp/esp-idf/export.sh'
 
 alias nv="NVIM_APPNAME='nvim-next' nvim"
+alias wezterm='flatpak run org.wezfurlong.wezterm'
+
 
 source ~/scripts/sync_project/sync_project.sh
 source ~/scripts/histogram.sh
