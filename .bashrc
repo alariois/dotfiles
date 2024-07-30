@@ -126,6 +126,7 @@ stty -ixon
 alias fd=fdfind
 export EDITOR='nvim -u NONE'
 export VISUAL='nvim -u NONE'
+export ANDROID_NDK=/home/alari/Android/Sdk/ndk/25.1.8937393
 
 # deep node
 alias dn='node ~/scripts/deep_node_log.js'
@@ -264,11 +265,16 @@ export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
 export ANDROID_HOME=/home/alari/Android/Sdk
 export PATH=$PATH:$ANDROID_HOME/emulator
 export PATH=$PATH:$ANDROID_HOME/platform-tools
+export PATH="$PATH:/home/alari/.dotnet/tools"
 export PATH=$PATH:/home/alari/tools/latexdiff
 export PATH=$PATH:/home/alari/tools
+export PATH=$PATH:$HOME/dotnet
+export PATH=$PATH:$HOME/Android/Sdk/tools/bin
+export DOTNET_ROOT=$HOME/dotnet
 export SPHINXBUILD=/home/alari/bin/sphinx-build
 # export ZEPHYR_BASE=/home/alari/zephyrproject
 export ZEPHYR_BASE=/home/alari/ncs_v2.5.2
 
+export PATH=$PATH:/usr/local/go/bin
 
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
