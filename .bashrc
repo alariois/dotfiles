@@ -144,6 +144,7 @@ source ~/scripts/histogram.sh
 source ~/scripts/remrep.sh
 source ~/scripts/diffwatch.sh
 source ~/scripts/jsonstr/jsonstr.sh
+source ~/scripts/xprop/setopacity.sh
 source ~/.aliases
 
 # set Tallinn as default time zone
