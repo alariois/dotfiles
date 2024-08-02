@@ -8,6 +8,8 @@
 # TODO: actually also move the scrpy windows to some predefined places (with yaml file maybe)
 # TODO: add functionality to optionally install some passed in apk to all emulators and run them
 # TODO: add functionality to optionally just run some apk (with bundle id) on all devices (and if not present install some apk and then open)
+# TODO: add function that opens scrpy for all non-emulator devices
+# TODO: don't hardcode port numbers (try to get first check if it is available)
 #
 # Function to start an emulator in headless mode
 android_start_emulator() {
