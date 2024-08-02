@@ -42,8 +42,8 @@ android_start_emulator() {
       echo "Trying to connect to $serial ($name) with scrcpy..."
       echo "Trying to connect to $serial ($name) with scrcpy..." >> /tmp/emulog
       scrcpy -s $serial --window-title "$name" && break
-      # Wait for 2 seconds before retrying
-      sleep 2
+      # Wait for 1 seconds before retrying
+      sleep 1
     done
   }
 
@@ -61,8 +61,8 @@ android_start_emulator() {
           known_devices="$known_devices $device"
         fi
       done
-      # Wait for 2 seconds before checking again
-      sleep 2
+      # Wait for 1 seconds before checking again
+      sleep 1
     done
   }
 
