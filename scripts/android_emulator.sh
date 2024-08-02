@@ -5,6 +5,7 @@
 # TODO: logs keep on printing after we have closed
 # TODO: make it parallel! Right now I think emulators are started one by one
 # TODO: also kill in parallel
+# TODO: actually also move the scrpy windows to some predefined places (with yaml file maybe)
 #
 # Function to start an emulator in headless mode
 android_start_emulator() {
