@@ -6,6 +6,8 @@
 # TODO: make it parallel! Right now I think emulators are started one by one
 # TODO: also kill in parallel
 # TODO: actually also move the scrpy windows to some predefined places (with yaml file maybe)
+# TODO: add functionality to optionally install some passed in apk to all emulators and run them
+# TODO: add functionality to optionally just run some apk (with bundle id) on all devices (and if not present install some apk and then open)
 #
 # Function to start an emulator in headless mode
 android_start_emulator() {
