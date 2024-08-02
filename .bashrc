@@ -145,6 +145,7 @@ source ~/scripts/remrep.sh
 source ~/scripts/diffwatch.sh
 source ~/scripts/jsonstr/jsonstr.sh
 source ~/scripts/xprop/setopacity.sh
+source ~/scripts/android_emulator.sh
 source ~/.aliases
 
 # set Tallinn as default time zone
@@ -234,7 +235,7 @@ esac
 # pnpm end
 
 # Load Angular CLI autocompletion.
-source <(ng completion script)
+# source <(ng completion script)
 
 PATH="/home/alari/perl5/bin${PATH:+:${PATH}}"; export PATH;
 PERL5LIB="/home/alari/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
