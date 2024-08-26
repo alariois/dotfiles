@@ -15,6 +15,6 @@ npmrn() {
   echo "replacing with ${package} version ${version}"
 
   # Replace the package version in all package.json files, excluding node_modules
-  find -not -path '*node_modules*' -name 'package.json' | xargs sed -i "s/\(\"$package\" *: *\"[\^~]*\)[0-9]\+\.[0-9]\+\.[0-9]\+\"/\1$version\"/"
+  find -not -path '*node_modules*' -name 'package.json' | xargs sed -i "s#\(\"$package\" *: *\"[\^~]*\)[0-9]\+\.[0-9]\+\.[0-9]\+\"#\1$version\"#"
 }
 
