@@ -146,6 +146,7 @@ source ~/scripts/diffwatch.sh
 source ~/scripts/jsonstr/jsonstr.sh
 source ~/scripts/xprop/setopacity.sh
 source ~/scripts/android_emulator.sh
+source ~/scripts/nodeutils.sh
 source ~/.aliases
 
 # set Tallinn as default time zone
