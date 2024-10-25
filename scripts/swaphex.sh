@@ -1,5 +1,37 @@
 #!/usr/bin/env bash
 
+swaphexline() {
+  INPUT="$1"                 # Use provided argument as input
+
+  # Get prefix (everything up to and including 0x or 0X)
+  PREFIX="$(echo "$INPUT" | grep -o '^.*0[xX]')"
+  PREFIX_LEN=${#PREFIX}
+
+  # Get the rest of the string after PREFIX
+  AFTER_PREFIX="${INPUT:PREFIX_LEN}"
+
+  # Get suffix (anything that comes after the hex characters)
+  SUFFIX="$(echo "$AFTER_PREFIX" | grep -o '[^0-9a-fA-F].*')"
+
+  # Extract the hex part by removing PREFIX and SUFFIX
+  HEX="$(echo "$INPUT" | sed "s/^$PREFIX//" | sed "s/$SUFFIX$//")"
+
+  # echo "PREFIX: $PREFIX"
+  # echo "SUFFIX: $SUFFIX"
+
+  # Check if HEX has an odd number of characters, pad with 0 if needed
+  if [ $(( ${#HEX} % 2 )) -ne 0 ]; then
+      HEX="0$HEX"
+  fi
+
+  # Swap the endianness of HEX
+  SWAPPED="$(echo "$HEX" | sed 's/../&\n/g' | tac | tr -d '\n')"
+
+  # Final result for the current line
+  RESULT="$PREFIX$SWAPPED$SUFFIX"
+  echo "$RESULT"
+}
+
 swaphex() {
   # Determine input source: clipboard (-c or --clipboard), stdin (pipe), or direct argument
   if [[ "$1" == "-c" || "$1" == "--clipboard" ]]; then
@@ -10,38 +42,30 @@ swaphex() {
     INPUT="$1"                 # Use provided argument as input
   fi
 
-  # Remove whitespace from the input
-  NO_WHITESPACE="$(echo "$INPUT" | sed 's/\s*//g')"
+  # Initialize an empty variable to accumulate results
+  RESULTS=""
 
-  # Get prefix (everything up to and including 0x or 0X)
-  PREFIX="$(echo "$NO_WHITESPACE" | grep -o '^.*0[xX]')"
-  PREFIX_LEN=${#PREFIX}
+  COUNT=0
 
-  # Get the rest of the string after PREFIX
-  AFTER_PREFIX="${NO_WHITESPACE:PREFIX_LEN}"
+  while IFS= read -r line; do
+    # Process each line with swaphexline and accumulate results
+    if [[ $COUNT -ne 0 ]]; then
+      RESULTS+=$'\n'
+    fi
+    ((COUNT++))
 
-  # Get suffix (anything that comes after the hex characters)
-  SUFFIX="$(echo "$AFTER_PREFIX" | grep -o '[^0-9a-fA-F].*')"
+    RESULTS+="$(swaphexline "$line")"
+    # echo "LINE: $line"
+  done <<< "$INPUT"
 
-  # Extract the hex part by removing PREFIX and SUFFIX
-  HEX="$(echo "$NO_WHITESPACE" | sed "s/^$PREFIX//" | sed "s/$SUFFIX$//")"
+  # Print the accumulated results
+  echo -e "$RESULTS"
 
-  # Check if HEX has an odd number of characters, pad with 0 if needed
-  if [ $(( ${#HEX} % 2 )) -ne 0 ]; then
-      HEX="0$HEX"
-  fi
-
-  # Swap the endianness of HEX
-  SWAPPED="$(echo "$HEX" | sed 's/../&\n/g' | tac | tr -d '\n')"
-
-  # Final result
-  RESULT="$PREFIX$SWAPPED$SUFFIX"
-  echo "$RESULT"
-
-  # If -c or --clipboard flag is provided, copy the result back to clipboard
+  # If -c or --clipboard flag is provided, copy all results to clipboard
   if [[ "$1" == "-c" || "$1" == "--clipboard" ]]; then
-    printf "%s" "$RESULT" | xclip -se c
+    echo -e "$RESULTS" | xclip -se c
   fi
 }
 
 export -f swaphex
+
