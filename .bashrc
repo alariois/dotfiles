@@ -150,6 +150,8 @@ source ~/scripts/nodeutils.sh
 source ~/scripts/wgettail.sh
 source ~/scripts/swaphex.sh
 source ~/scripts/git_root.sh
+source ~/scripts/repoinit.sh
+source ~/scripts/gh_issues.sh
 source ~/.aliases
 
 # set Tallinn as default time zone
@@ -282,5 +284,7 @@ export SPHINXBUILD=/home/alari/bin/sphinx-build
 export ZEPHYR_BASE=/home/alari/ncs_v2.5.2
 
 export PATH=$PATH:/usr/local/go/bin
+export PATH="/home/alari/development/flutter/bin:$PATH"
+
 
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
