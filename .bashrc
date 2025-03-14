@@ -147,6 +147,7 @@ source ~/scripts/jsonstr/jsonstr.sh
 source ~/scripts/xprop/setopacity.sh
 source ~/scripts/android_emulator.sh
 source ~/scripts/nodeutils.sh
+source ~/scripts/fields.sh
 source ~/scripts/wgettail.sh
 source ~/scripts/swaphex.sh
 source ~/scripts/git_root.sh
@@ -270,7 +271,7 @@ PERL_MM_OPT="INSTALL_BASE=/home/alari/perl5"; export PERL_MM_OPT;
 # }
 
 export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
-export ANDROID_HOME=/home/alari/Android/Sdk
+export ANDROID_HOME=/home/alari/Android/sdk
 export PATH=$PATH:$ANDROID_HOME/emulator
 export PATH=$PATH:$ANDROID_HOME/platform-tools
 export PATH="$PATH:/home/alari/.dotnet/tools"
@@ -288,3 +289,5 @@ export PATH="/home/alari/development/flutter/bin:$PATH"
 
 
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+eval "$(direnv hook bash)"
+
