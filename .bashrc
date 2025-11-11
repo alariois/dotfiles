@@ -135,7 +135,9 @@ alias dn='node ~/scripts/deep_node_log.js'
 alias tmuxmobile='tmux source-file ~/.tmux.mobile.conf'
 alias get_idf='. $HOME/esp/esp-idf/export.sh'
 
-alias nv="NVIM_APPNAME='nvim-next' nvim"
+alias nv="NVIM_APPNAME='nvim-new' nvim"
+# alias nv="NVIM_APPNAME='nvim-next' nvim"
+# alias nv="NVIM_APPNAME='nvchad' nvim"
 alias wezterm='flatpak run org.wezfurlong.wezterm'
 
 
@@ -153,6 +155,7 @@ source ~/scripts/swaphex.sh
 source ~/scripts/git_root.sh
 source ~/scripts/repoinit.sh
 source ~/scripts/gh_issues.sh
+source ~/scripts/tmux/tmuxsplit.sh
 source ~/.aliases
 
 # set Tallinn as default time zone
@@ -286,8 +289,13 @@ export ZEPHYR_BASE=/home/alari/ncs_v2.5.2
 
 export PATH=$PATH:/usr/local/go/bin
 export PATH="/home/alari/development/flutter/bin:$PATH"
+export PATH="/usr/lib/postgresql/15/bin:$PATH"
 
+export SUPERSPOT_DEV_ENV=true
 
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 eval "$(direnv hook bash)"
 
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+xset r rate 180 33
