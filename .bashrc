@@ -151,6 +151,7 @@ source ~/scripts/android_emulator.sh
 source ~/scripts/nodeutils.sh
 source ~/scripts/fields.sh
 source ~/scripts/wgettail.sh
+source ~/scripts/pbm2ascii.sh
 source ~/scripts/gitcommits.sh
 source ~/scripts/gitallcommits.sh
 source ~/scripts/swaphex.sh
