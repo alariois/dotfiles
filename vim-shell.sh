@@ -1,5 +1,5 @@
 #!/bin/bash
-# test comment
+# next test comment
 
 # Log the received command
 # echo "Received command: $@" >> ~/vim-shell-debug.log

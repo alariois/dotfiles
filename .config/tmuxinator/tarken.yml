@@ -1,0 +1,41 @@
+# NB!
+# This script expects a remote mac keychain password to be saved in 'pass mac'
+# fx, curl, rsync and nvim must be installed
+
+name: tarken
+root: /home/alari/projects/superhands/Tarken_app
+
+pre_window: |
+  export MAC_IP="192.168.1.126"
+  export MAC_USER="alariois"
+  export MAC_PROJ="projects/Tarken_app"
+  export MAC_PROJ_ABSOLUTE="/Users/$MAC_USER/$MAC_PROJ"
+
+windows:
+  - code: nv .
+  - droid:
+      layout: vertical
+      panes:
+        - >
+          history -s "npm start" # dev;
+          clear;
+  - mac:
+      layout: vertical
+      panes:
+        - >
+          history -s "sync_project --exclude='package-lock.json' . alariois@$MAC_IP:$MAC_PROJ # resync";
+          history -s "sync_project -n --exclude='package-lock.json' . alariois@$MAC_IP:$MAC_PROJ # resync dry";
+          clear;
+        - >
+          PASSWORD=$(pass mac)
+           ssh -o SendEnv=PASSWORD -t alariois@$MAC_IP "
+              cd $MAC_PROJ_ABSOLUTE;
+              expect -c '
+                spawn security unlock-keychain
+                expect \"password to unlock\"
+                send \"$PASSWORD\\r\"
+                expect eof
+              ';
+              clear;
+              exec \$SHELL -l;
+           "

@@ -135,7 +135,9 @@ alias dn='node ~/scripts/deep_node_log.js'
 alias tmuxmobile='tmux source-file ~/.tmux.mobile.conf'
 alias get_idf='. $HOME/esp/esp-idf/export.sh'
 
-alias nv="NVIM_APPNAME='nvim-next' nvim"
+alias nv="NVIM_APPNAME='nvim-new' nvim"
+# alias nv="NVIM_APPNAME='nvim-next' nvim"
+# alias nv="NVIM_APPNAME='nvchad' nvim"
 alias wezterm='flatpak run org.wezfurlong.wezterm'
 
 
@@ -147,8 +149,16 @@ source ~/scripts/jsonstr/jsonstr.sh
 source ~/scripts/xprop/setopacity.sh
 source ~/scripts/android_emulator.sh
 source ~/scripts/nodeutils.sh
+source ~/scripts/fields.sh
 source ~/scripts/wgettail.sh
+source ~/scripts/pbm2ascii.sh
+source ~/scripts/gitcommits.sh
+source ~/scripts/gitallcommits.sh
 source ~/scripts/swaphex.sh
+source ~/scripts/git_root.sh
+source ~/scripts/repoinit.sh
+source ~/scripts/gh_issues.sh
+source ~/scripts/tmux/tmuxsplit.sh
 source ~/.aliases
 
 # set Tallinn as default time zone
@@ -267,7 +277,7 @@ PERL_MM_OPT="INSTALL_BASE=/home/alari/perl5"; export PERL_MM_OPT;
 # }
 
 export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
-export ANDROID_HOME=/home/alari/Android/Sdk
+export ANDROID_HOME=/home/alari/Android/sdk
 export PATH=$PATH:$ANDROID_HOME/emulator
 export PATH=$PATH:$ANDROID_HOME/platform-tools
 export PATH="$PATH:/home/alari/.dotnet/tools"
@@ -281,5 +291,16 @@ export SPHINXBUILD=/home/alari/bin/sphinx-build
 export ZEPHYR_BASE=/home/alari/ncs_v2.5.2
 
 export PATH=$PATH:/usr/local/go/bin
+export PATH="/home/alari/development/flutter/bin:$PATH"
+export PATH="/usr/lib/postgresql/15/bin:$PATH"
+
+export SUPERSPOT_DEV_ENV=true
 
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+eval "$(direnv hook bash)"
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+xset r rate 180 33
+export PATH=/usr/local/cuda/bin:$PATH
+export LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH
