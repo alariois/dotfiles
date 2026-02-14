@@ -246,7 +246,7 @@ PERL_LOCAL_LIB_ROOT="/home/alari/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_R
 PERL_MB_OPT="--install_base \"/home/alari/perl5\""; export PERL_MB_OPT;
 PERL_MM_OPT="INSTALL_BASE=/home/alari/perl5"; export PERL_MM_OPT;
 
-. "$HOME/.cargo/env"
+# . "$HOME/.cargo/env"
 
 # THIS MESSES UP NVIM REAL BAD!
 # TODO: make it toggleable?
@@ -282,4 +282,6 @@ export ZEPHYR_BASE=/home/alari/ncs_v2.5.2
 
 export PATH=$PATH:/usr/local/go/bin
 
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+# eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
